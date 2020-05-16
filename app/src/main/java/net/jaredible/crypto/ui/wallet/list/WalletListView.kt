@@ -1,3 +1,9 @@
 package net.jaredible.crypto.ui.wallet.list
 
-interface WalletListView {}
+interface WalletListView {
+
+    fun openAddWalletScreen()
+
+    fun openSettingsScreen()
+
+}

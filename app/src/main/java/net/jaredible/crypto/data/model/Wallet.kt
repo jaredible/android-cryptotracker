@@ -23,5 +23,5 @@ data class Wallet(
     @ColumnInfo(name = "crypto_symbol")
     val cryptoSymbol: String,
     @ColumnInfo(name = "balance")
-    val balance: Int
+    val balance: Double = -1.0
 )

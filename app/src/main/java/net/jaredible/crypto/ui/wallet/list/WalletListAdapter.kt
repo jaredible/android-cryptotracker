@@ -9,18 +9,21 @@ import net.jaredible.crypto.data.model.Wallet
 import net.jaredible.crypto.ui.base.BaseAdapter
 import net.jaredible.crypto.ui.base.BaseViewHolder
 
-class WalletListAdapter(private val walletListView: WalletListView) : BaseAdapter<WalletListAdapter.WalletListViewHolder>() {
+class WalletListAdapter(private val walletListView: WalletListView) :
+    BaseAdapter<WalletListAdapter.WalletListViewHolder>() {
 
     val wallets = mutableListOf<Wallet>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletListViewHolder {
-        val itemGroup = LayoutInflater.from(parent.context).inflate(R.layout.item_wallet, parent, false)
+        val itemGroup =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_wallet, parent, false)
         return WalletListViewHolder(itemGroup)
     }
 
     override fun getItemCount() = wallets.size
 
-    override fun onBindViewHolder(holder: WalletListViewHolder, position: Int) = holder.bind(position)
+    override fun onBindViewHolder(holder: WalletListViewHolder, position: Int) =
+        holder.bind(position)
 
     fun setWallets(wallets: List<Wallet>) {
         this.wallets.clear()

@@ -1,4 +1,5 @@
 package net.jaredible.crypto.ui.wallet.select
 
-class SelectCryptoActivity {
-}
+import net.jaredible.crypto.ui.base.BaseActivity
+
+class SelectCryptoActivity : BaseActivity() {}

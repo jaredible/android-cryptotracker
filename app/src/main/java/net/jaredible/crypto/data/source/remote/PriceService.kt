@@ -1,4 +1,4 @@
 package net.jaredible.crypto.data.source.remote
 
-class PriceService {
+interface PriceService {
 }

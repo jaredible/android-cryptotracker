@@ -8,18 +8,21 @@ import net.jaredible.crypto.data.model.Wallet
 interface WalletDao {
 
     @Query("SELECT * FROM wallet ORDER BY name")
-    fun getWallets(): LiveData<List<Wallet>>
+    fun get(): LiveData<List<Wallet>>
 
     @Query("SELECT * FROM wallet WHERE name = :name")
-    fun getWallet(name: String): LiveData<Wallet>
+    fun get(name: String): LiveData<Wallet>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(wallet: Wallet)
+    fun insert(wallet: Wallet)
 
     @Update
-    suspend fun update(wallet: Wallet)
+    fun update(wallet: Wallet)
 
     @Delete
-    suspend fun delete(wallet: Wallet)
+    fun delete(wallet: Wallet)
+
+    @Query("DELETE FROM wallet")
+    fun delete()
 
 }

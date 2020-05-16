@@ -14,13 +14,16 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity
-            android:name=".ui.wallet.list.WalletListActivity"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
+            android:name=".ui.splash.SplashActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.wallet.list.WalletListActivity" />
 
         <activity
             android:name=".ui.wallet.add.AddWalletActivity"
@@ -28,9 +31,13 @@
 
         <activity android:name=".ui.wallet.show.ShowWalletActivity" />
 
+        <activity android:name=".ui.wallet.select.SelectCryptoActivity" />
+
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:theme="@style/AppTheme" />
+
+        <service android:name=".ui.MusicService" />
 
     </application>
 </manifest>

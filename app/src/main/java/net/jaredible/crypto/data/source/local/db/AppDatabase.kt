@@ -19,6 +19,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context) = INSTANCE ?: synchronized(this) {
             Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "crypto.db")
+                //.createFromAsset("database/crypto.db")
                 .build()
                 .also { INSTANCE = it }
         }

@@ -1,44 +1,64 @@
 package net.jaredible.crypto.data.repository
 
-import androidx.lifecycle.MutableLiveData
+import android.os.AsyncTask
 import net.jaredible.crypto.App
 import net.jaredible.crypto.Const
 import net.jaredible.crypto.data.model.Crypto
-import net.jaredible.crypto.data.model.response.CryptoResponse
 import net.jaredible.crypto.data.source.local.db.AppDatabase
 import net.jaredible.crypto.data.source.remote.factory.ServiceFactory
 import net.jaredible.crypto.data.source.remote.CryptoService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 object CryptoRepository {
 
-    private val cryptoDb by lazy {
-        AppDatabase.getDatabase(App.context).cryptoDao()
+    private val cryptoDao by lazy { AppDatabase.getDatabase(App.context).cryptoDao() }
+    private val cryptoService by lazy { ServiceFactory.newInstance<CryptoService>(Const.CRYPTO_API_BASE_URL) }
+
+    fun getAllCryptos() = cryptoDao.get()
+
+    fun getCrypto(symbol: String) = cryptoDao.get(symbol)
+
+    fun addCrypto(crypto: Crypto) {
+        AddCryptoTask().execute(crypto)
     }
-    private val cryptoApi by lazy {
-        ServiceFactory.newInstance<CryptoService>(Const.CRYPTO_API_BASE_URL)
+
+    fun updateCrypto(crypto: Crypto) {
+        UpdateCryptoTask().execute(crypto)
     }
 
-    suspend fun addCrypto(crypto: Crypto) = cryptoDb.insert(crypto)
+    fun deleteCrypto(crypto: Crypto) {
+        DeleteCryptoTask().execute(crypto)
+    }
 
-    fun getAll(): MutableLiveData<CryptoResponse> {
-        val cryptoData = MutableLiveData<CryptoResponse>()
+    fun deleteAllCryptos() {
+        DeleteAllCryptosTask().execute()
+    }
 
-        cryptoApi.getCryptos().enqueue(object : Callback<CryptoResponse> {
-            override fun onResponse(call: Call<CryptoResponse>, response: Response<CryptoResponse>) {
-                if (response.isSuccessful) {
-                    cryptoData.value = response.body()
-                }
-            }
+    private class AddCryptoTask : AsyncTask<Crypto?, Void?, Void?>() {
+        override fun doInBackground(vararg params: Crypto?): Void? {
+            params[0]?.let { cryptoDao.insert(it) }
+            return null
+        }
+    }
 
-            override fun onFailure(call: Call<CryptoResponse>, t: Throwable) {
-                cryptoData.value = null
-            }
-        })
+    private class UpdateCryptoTask : AsyncTask<Crypto?, Void?, Void?>() {
+        override fun doInBackground(vararg params: Crypto?): Void? {
+            params[0]?.let { cryptoDao.update(it) }
+            return null
+        }
+    }
 
-        return cryptoData
+    private class DeleteCryptoTask : AsyncTask<Crypto?, Void?, Void?>() {
+        override fun doInBackground(vararg params: Crypto?): Void? {
+            params[0]?.let { cryptoDao.insert(it) }
+            return null
+        }
+    }
+
+    private class DeleteAllCryptosTask : AsyncTask<Void?, Void?, Void?>() {
+        override fun doInBackground(vararg params: Void?): Void? {
+            cryptoDao.delete()
+            return null
+        }
     }
 
 }

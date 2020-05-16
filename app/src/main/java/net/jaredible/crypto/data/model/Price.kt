@@ -20,8 +20,6 @@ data class Price(
     @PrimaryKey
     @ColumnInfo(name = "crypto_symbol")
     val cryptoSymbol: String,
-    @ColumnInfo(name = "price_btc")
-    val priceBtc: Int,
     @ColumnInfo(name = "price_usd")
-    val priceUsd: Int
+    val priceUsd: Double = 0.0
 )
