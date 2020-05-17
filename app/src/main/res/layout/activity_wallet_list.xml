@@ -5,7 +5,8 @@
     android:id="@+id/vCoordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_extra_light">
+    android:background="@color/grey_extra_light"
+    tools:context=".ui.wallet.list.WalletListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -69,12 +70,14 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-                <ImageView
-                    android:layout_width="55dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/ic_qrcode"
-                    app:tint="@android:color/white" />
+                    android:fontFamily="sans-serif"
+                    android:paddingTop="5dp"
+                    android:text="Crypto"
+                    android:textColor="@android:color/white"
+                    android:textSize="25sp" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -86,7 +89,6 @@
         android:id="@+id/vRefresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -95,6 +97,8 @@
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:overScrollMode="never"
+            android:paddingVertical="10dp"
+            android:layoutAnimation="@anim/layout_animation_slide_in_left"
             tools:listitem="@layout/item_wallet" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

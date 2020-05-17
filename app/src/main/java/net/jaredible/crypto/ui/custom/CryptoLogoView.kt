@@ -25,7 +25,7 @@ class CryptoLogoView(context: Context, attrs: AttributeSet? = null) : FrameLayou
 
     fun setCrypto(crypto: Crypto) {
         clear()
-        vClvLogo.setImageResource(crypto.logoResId)
+        //vClvLogo.setImageResource(crypto.logoResId)
     }
 
     fun clear() {

@@ -8,13 +8,16 @@ import net.jaredible.crypto.data.model.Crypto
 interface CryptoDao {
 
     @Query("SELECT * FROM crypto ORDER BY symbol")
-    fun get(): LiveData<Crypto>
+    fun get(): LiveData<List<Crypto>>
 
     @Query("SELECT * FROM crypto WHERE symbol = :symbol ORDER BY symbol")
     fun get(symbol: String): LiveData<Crypto>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(crypto: Crypto)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(cryptos: List<Crypto>)
 
     @Update
     fun update(crypto: Crypto)

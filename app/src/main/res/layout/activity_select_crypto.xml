@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/vToolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
@@ -21,12 +21,20 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/vWallets"
+        android:id="@+id/vCryptos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clipToPadding="false"
+        android:layoutAnimation="@anim/layout_animation_slide_in_left"
         android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_crypto" />
+
+    <ProgressBar
+        android:id="@+id/vProgress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:progressDrawable="@drawable/circle" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

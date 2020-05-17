@@ -1,52 +1,87 @@
 package net.jaredible.crypto
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
-import net.jaredible.crypto.data.model.Crypto
-import net.jaredible.crypto.data.model.Price
-import net.jaredible.crypto.data.model.Wallet
+import android.content.Intent
+import android.os.Build
+import androidx.annotation.DrawableRes
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import net.jaredible.crypto.data.repository.CryptoRepository
+import net.jaredible.crypto.data.repository.PreferenceRepository
 import net.jaredible.crypto.data.repository.PriceRepository
-import net.jaredible.crypto.data.repository.WalletRepository
-import java.math.BigDecimal
+import net.jaredible.crypto.ui.MusicService
 
 class App : Application() {
 
     companion object {
-        lateinit var context: Context private set
+        lateinit var context: App private set
+        private const val CHANNEL_ID = "net.jaredible.crypto.CHANNEL_ID"
+        private const val NOTIFICATION_CRYPTOS_UPDATED_ID = 1
+        private const val NOTIFICATION_PRICES_UPDATED_ID = 2
     }
 
     override fun onCreate() {
         super.onCreate()
         context = this
 
+        initMusic()
         initDatabase()
+        initNotificationChannels()
+
+        CryptoRepository.updateCryptos()
+        PriceRepository.updatePrices()
     }
 
-    private fun initDatabase() {
-        CryptoRepository.deleteAllCryptos()
-        CryptoRepository.addCrypto(Crypto("BTC", "Bitcoin"))
-        CryptoRepository.addCrypto(Crypto("ETH", "Ethereum"))
-        CryptoRepository.addCrypto(Crypto("LTC", "Litecoin"))
-        CryptoRepository.addCrypto(Crypto("XRP", "Ripple"))
-        CryptoRepository.addCrypto(Crypto("BAT", "Basic Attention Token"))
-        CryptoRepository.addCrypto(Crypto("DOGE", "Dogecoin"))
+    private fun initMusic() {
+        toggleMusic(PreferenceRepository.isMusicEnabled())
+    }
 
-        PriceRepository.deleteAllPrices()
-        PriceRepository.addPrice(Price("BTC", 9496.98))
-        PriceRepository.addPrice(Price("ETH", 201.29))
-        PriceRepository.addPrice(Price("LTC", 43.58))
-        PriceRepository.addPrice(Price("XRP", 0.2010))
-        PriceRepository.addPrice(Price("BAT", 0.2038))
-        PriceRepository.addPrice(Price("DOGE", 0.002564))
+    private fun initDatabase() {}
 
-        WalletRepository.deleteAllWallets()
-        WalletRepository.addWallet(Wallet("My Bitcoin", "BTC", 1.0))
-        WalletRepository.addWallet(Wallet("My Ethereum", "ETH", 1.2))
-        WalletRepository.addWallet(Wallet("My Litecoin", "LTC", 1.4))
-        WalletRepository.addWallet(Wallet("My Ripple", "XRP", 1.6))
-        WalletRepository.addWallet(Wallet("My Basic Attention Token", "BAT", 1.8))
-        WalletRepository.addWallet(Wallet("My Dogecoin", "DOGE", 2.0))
+    fun toggleMusic(enabled: Boolean) {
+        val intent = Intent(this, MusicService::class.java)
+        if (enabled) startService(intent)
+        else stopService(intent)
+    }
+
+    private fun initNotificationChannels() {
+        createNotificationChannel(getString(R.string.channel_name), getString(R.string.channel_description))
+    }
+
+    private fun createNotificationChannel(name: String, description: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply { this.description = description }
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun showNotification(id: Int, @DrawableRes icon: Int, title: String, content: String) {
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(icon)
+            .setContentTitle(title)
+            .setContentText(content)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(this)) {
+            notify(id, builder.build())
+        }
+    }
+
+    fun notifyCryptosUpdated() {
+        val title = getString(R.string.notification_cryptos_updated_title)
+        val content = getString(R.string.notification_cryptos_updated_content)
+        showNotification(NOTIFICATION_CRYPTOS_UPDATED_ID, R.drawable.bg_splash, title, content)
+    }
+
+    fun notifyPricesUpdated() {
+        val title = getString(R.string.notification_prices_updated_title)
+        val content = getString(R.string.notification_prices_updated_content)
+        showNotification(NOTIFICATION_PRICES_UPDATED_ID, R.drawable.bg_splash, title, content)
     }
 
 }

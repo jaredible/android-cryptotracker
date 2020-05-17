@@ -22,7 +22,6 @@
             android:layout_gravity="start|center_vertical"
             android:layout_marginStart="20dp"
             android:contentDescription="TODO"
-            android:src="@drawable/logo_btc"
             app:backgroundColor="@color/colorPrimaryDark"
             tools:src="@drawable/logo_btc" />
 
@@ -44,19 +43,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 android:textColor="@android:color/black"
                 app:textAllCaps="true"
-                tools:text="Bitcoin" />
-
-            <TextView
-                android:id="@+id/vConvertedBalance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/vBalance"
-                android:fontFamily="sans-serif-condensed"
-                android:maxLines="1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/grey_extra_dark"
-                app:autoSizeTextType="uniform"
-                tools:text="1.234.567,89 USD" />
+                tools:text="My Bitcoin Wallet" />
 
             <TextView
                 android:id="@+id/vBalance"
@@ -70,6 +57,18 @@
                 android:textColor="@android:color/black"
                 app:autoSizeTextType="uniform"
                 tools:text="123456789.00000001 BTC" />
+
+            <TextView
+                android:id="@+id/vConvertedBalance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vBalance"
+                android:fontFamily="sans-serif-condensed"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/grey_extra_dark"
+                app:autoSizeTextType="uniform"
+                tools:text="1.234.567,89 USD" />
 
         </RelativeLayout>
 

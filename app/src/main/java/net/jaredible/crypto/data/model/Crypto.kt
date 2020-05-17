@@ -1,23 +1,23 @@
 package net.jaredible.crypto.data.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import net.jaredible.crypto.App
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "crypto")
+@Parcelize
 data class Crypto(
     @PrimaryKey
     @ColumnInfo(name = "symbol")
+    @SerializedName("symbol")
     val symbol: String,
     @ColumnInfo(name = "name")
-    val name: String
-) {
-    @Ignore
-    val logoResId = App.context.resources.getIdentifier(
-        "logo_${symbol.toLowerCase()}",
-        "drawable",
-        App.context.packageName
-    )
-}
+    @SerializedName("name")
+    val name: String,
+    @ColumnInfo(name = "image_url")
+    @SerializedName("imageUrl")
+    val imageUrl: String
+) : Parcelable

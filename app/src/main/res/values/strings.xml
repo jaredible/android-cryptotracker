@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Crypto</string>
+
+    <string name="channel_name">Cryptocurrency Updates</string>
+    <string name="channel_description">Cryptocurrency updates.</string>
+    <string name="notification_cryptos_updated_title">Cryptocurrencies Updated</string>
+    <string name="notification_cryptos_updated_content">Cryptocurrencies have been updated.</string>
+    <string name="notification_prices_updated_title">Cryptocurrency Prices Updated</string>
+    <string name="notification_prices_updated_content">Cryptocurrency prices have been updated.</string>
 </resources>

@@ -11,7 +11,7 @@ object WalletRepository {
 
     fun getAllWallets() = walletDao.get()
 
-    fun getWallet(name: String) = walletDao.get(name)
+    fun getWallet(id: Int) = walletDao.get(id)
 
     fun addWallet(wallet: Wallet) {
         AddWalletTask().execute(wallet)
@@ -52,7 +52,6 @@ object WalletRepository {
 
     private class DeleteAllWalletsTask : AsyncTask<Void?, Void?, Void?>() {
         override fun doInBackground(vararg params: Void?): Void? {
-            walletDao.delete()
             return null
         }
     }

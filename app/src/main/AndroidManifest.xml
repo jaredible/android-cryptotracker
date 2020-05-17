@@ -25,17 +25,15 @@
 
         <activity android:name=".ui.wallet.list.WalletListActivity" />
 
+        <activity android:name=".ui.wallet.select.SelectCryptoActivity" />
+
         <activity
             android:name=".ui.wallet.add.AddWalletActivity"
             android:theme="@style/AppTheme.NoActionBar.Transparent" />
 
-        <activity android:name=".ui.wallet.show.ShowWalletActivity" />
-
-        <activity android:name=".ui.wallet.select.SelectCryptoActivity" />
-
         <activity
             android:name=".ui.settings.SettingsActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar.Transparent" />
 
         <service android:name=".ui.MusicService" />
 

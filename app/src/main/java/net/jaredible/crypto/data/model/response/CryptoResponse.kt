@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 import net.jaredible.crypto.data.model.Crypto
 
 data class CryptoResponse(
-    @SerializedName("Data")
+    @SerializedName("data")
     val data: Map<String, Crypto>
 )

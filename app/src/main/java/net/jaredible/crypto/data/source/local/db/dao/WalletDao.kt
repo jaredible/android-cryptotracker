@@ -7,11 +7,11 @@ import net.jaredible.crypto.data.model.Wallet
 @Dao
 interface WalletDao {
 
-    @Query("SELECT * FROM wallet ORDER BY name")
+    @Query("SELECT * FROM wallet ORDER BY name, id")
     fun get(): LiveData<List<Wallet>>
 
-    @Query("SELECT * FROM wallet WHERE name = :name")
-    fun get(name: String): LiveData<Wallet>
+    @Query("SELECT * FROM wallet WHERE id = :id")
+    fun get(id: Int): LiveData<Wallet>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(wallet: Wallet)

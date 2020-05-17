@@ -40,7 +40,7 @@
             android:text="@string/app_name" />
 
         <Button
-            android:id="@+id/btDialogYes"
+            android:id="@+id/btnDialogYes"
             style="@style/RoundedDialog"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -56,11 +56,11 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/btDialogNo"
+            android:id="@+id/btnDialogNo"
             style="@style/RoundedDialog"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@+id/btDialogYes"
+            android:layout_below="@+id/btnDialogYes"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
@@ -72,11 +72,11 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/btDialogDone"
+            android:id="@+id/btnDialogDone"
             style="@style/RoundedDialog"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@+id/btDialogNo"
+            android:layout_below="@+id/btnDialogNo"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"

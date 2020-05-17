@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface CryptoService {
 
-    @GET("all/coinlist")
+    @GET("coins")
     fun getCryptos(): Call<CryptoResponse>
 
 }

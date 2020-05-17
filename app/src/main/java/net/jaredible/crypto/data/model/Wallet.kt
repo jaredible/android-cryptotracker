@@ -1,27 +1,21 @@
 package net.jaredible.crypto.data.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
-@Entity(
-    tableName = "wallet",
-    foreignKeys = [
-        ForeignKey(
-            entity = Crypto::class,
-            parentColumns = ["symbol"],
-            childColumns = ["crypto_symbol"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
-)
+@Entity(tableName = "wallet")
+@Parcelize
 data class Wallet(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    val id: Int,
     @ColumnInfo(name = "name")
     val name: String,
-    @ColumnInfo(name = "crypto_symbol")
-    val cryptoSymbol: String,
+    @ColumnInfo(name = "symbol")
+    val symbol: String,
     @ColumnInfo(name = "balance")
-    val balance: Double = -1.0
-)
+    val balance: Double = 0.0
+) : Parcelable

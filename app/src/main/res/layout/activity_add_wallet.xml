@@ -8,6 +8,21 @@
     android:background="@color/colorAccent"
     tools:context=".ui.wallet.add.AddWalletActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/vToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <RelativeLayout
         android:id="@+id/vQrCodeLayout"
         android:layout_width="match_parent"
@@ -34,15 +49,13 @@
                 android:layout_marginStart="3dp"
                 android:padding="10dp">
 
-                <net.jaredible.crypto.ui.custom.CryptoLogoView
+                <ImageView
                     android:id="@+id/vCryptoLogo"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    app:clv_backgroundColor="@android:color/white"
-                    app:clv_textColor="@color/colorAccentDark" />
+                    android:layout_marginEnd="10dp" />
 
                 <TextView
                     android:id="@+id/vCryptoSymbol"

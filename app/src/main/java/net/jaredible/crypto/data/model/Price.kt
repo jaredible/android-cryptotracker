@@ -1,25 +1,20 @@
 package net.jaredible.crypto.data.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-@Entity(
-    tableName = "price",
-    foreignKeys = [
-        ForeignKey(
-            entity = Crypto::class,
-            parentColumns = ["symbol"],
-            childColumns = ["crypto_symbol"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
-)
+@Entity(tableName = "price")
+@Parcelize
 data class Price(
     @PrimaryKey
-    @ColumnInfo(name = "crypto_symbol")
-    val cryptoSymbol: String,
-    @ColumnInfo(name = "price_usd")
-    val priceUsd: Double = 0.0
-)
+    @ColumnInfo(name = "symbol")
+    @SerializedName("symbol")
+    val symbol: String,
+    @ColumnInfo(name = "price")
+    @SerializedName("price")
+    val price: Double = 0.0
+) : Parcelable
