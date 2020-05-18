@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="400dp"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
     android:background="@drawable/rounded_1"
@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/vName"
-        android:layout_width="400dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="3dp"
@@ -24,15 +24,15 @@
 
     <ImageView
         android:id="@+id/vLogo"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_gravity="center"
         android:padding="15dp"
         tools:src="@drawable/logo_btc" />
 
     <TextView
         android:id="@+id/vBalance"
-        android:layout_width="400dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="3dp"

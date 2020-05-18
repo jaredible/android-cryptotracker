@@ -24,6 +24,7 @@ class AddWalletActivity : BaseActivity(), AddWalletView {
 
     companion object {
         private const val EXTRA_WALLET = "net.jaredible.crypto.EXTRA_WALLET"
+        private const val BUNDLE_CRYPTO = "BUNDLE_CRYPTO"
 
         fun getStartIntent(context: Context): Intent {
             return Intent(context, AddWalletActivity::class.java)
@@ -74,7 +75,7 @@ class AddWalletActivity : BaseActivity(), AddWalletView {
                 }
             }
         } else {
-            selectedCrypto = savedInstanceState.getParcelable("CRYPTO")!!
+            selectedCrypto = savedInstanceState.getParcelable(BUNDLE_CRYPTO)!!
             setCrypto(selectedCrypto)
         }
 
@@ -93,7 +94,7 @@ class AddWalletActivity : BaseActivity(), AddWalletView {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable("CRYPTO", selectedCrypto)
+        outState.putParcelable(BUNDLE_CRYPTO, selectedCrypto)
     }
 
     private fun setWallet(wallet: Wallet) {
@@ -128,10 +129,10 @@ class AddWalletActivity : BaseActivity(), AddWalletView {
         val balance = vBalance.text.toString().toDoubleOrNull()
 
         if (name.isBlank()) {
-            showMessage("Invalid name", MessageType.WARN)
+            showMessage(getString(R.string.invalid_name), MessageType.WARN)
             return
         } else if (balance == null) {
-            showMessage("Invalid balance", MessageType.WARN)
+            showMessage(getString(R.string.invalid_balance), MessageType.WARN)
             return
         }
 
@@ -140,14 +141,14 @@ class AddWalletActivity : BaseActivity(), AddWalletView {
         }
 
         viewModel.saveWallet(Wallet(0, name, symbol, balance))
-        showMessage("Wallet saved", MessageType.SUCCESS)
+        showMessage(getString(R.string.wallet_saved), MessageType.SUCCESS)
         finish()
     }
 
     override fun onRemoveWallet() {
         editingWallet?.let {
             viewModel.deleteWallet(it)
-            showMessage("Wallet removed", MessageType.SUCCESS)
+            showMessage(getString(R.string.wallet_removed), MessageType.SUCCESS)
             finish()
         }
     }
@@ -162,7 +163,7 @@ class AddWalletActivity : BaseActivity(), AddWalletView {
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             data?.let {
-                val crypto = it.getParcelableExtra<Crypto>("CRYPTO")
+                val crypto = it.getParcelableExtra<Crypto>(SelectCryptoActivity.RESULT_CRYPTO)
                 setCrypto(crypto)
             }
         }

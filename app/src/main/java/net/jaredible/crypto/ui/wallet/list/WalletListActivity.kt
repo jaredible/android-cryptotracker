@@ -24,6 +24,8 @@ import net.jaredible.crypto.util.observeOnce
 class WalletListActivity : BaseActivity(), WalletListView {
 
     companion object {
+        private const val BUNDLE_TOTAL = "BUNDLE_TOTAL"
+
         fun getStartIntent(context: Context): Intent {
             return Intent(context, WalletListActivity::class.java)
         }
@@ -82,12 +84,12 @@ class WalletListActivity : BaseActivity(), WalletListView {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        currentTotalBalance = savedInstanceState.getDouble("TOTAL")
+        currentTotalBalance = savedInstanceState.getDouble(BUNDLE_TOTAL)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putDouble("TOTAL", currentTotalBalance)
+        outState.putDouble(BUNDLE_TOTAL, currentTotalBalance)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

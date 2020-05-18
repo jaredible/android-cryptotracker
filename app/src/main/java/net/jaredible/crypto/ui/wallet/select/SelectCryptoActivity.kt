@@ -17,7 +17,7 @@ import net.jaredible.crypto.util.observeOnce
 class SelectCryptoActivity : BaseActivity(), SelectCryptoView {
 
     companion object {
-        val TAG = SelectCryptoActivity::class.simpleName
+        const val RESULT_CRYPTO = "RESULT_CRYPTO"
 
         fun newIntent(context: Context): Intent {
             return Intent(context, SelectCryptoActivity::class.java)
@@ -35,7 +35,7 @@ class SelectCryptoActivity : BaseActivity(), SelectCryptoView {
         setSupportActionBar(vToolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = "Choose one"
+            title = getString(R.string.choose_one)
         }
 
         viewManager = LinearLayoutManager(this)
@@ -54,7 +54,7 @@ class SelectCryptoActivity : BaseActivity(), SelectCryptoView {
     }
 
     override fun onCryptoSelected(crypto: Crypto) {
-        intent.putExtra("CRYPTO", crypto)
+        intent.putExtra(RESULT_CRYPTO, crypto)
         setResult(RESULT_OK, intent)
         finish()
     }
