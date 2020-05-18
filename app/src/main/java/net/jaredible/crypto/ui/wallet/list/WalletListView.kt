@@ -6,6 +6,8 @@ interface WalletListView {
 
     fun onWalletClicked(wallet: Wallet)
 
+    fun onWalletRemoved(wallet: Wallet)
+
     fun openAddWalletScreen()
 
     fun openSettingsScreen()

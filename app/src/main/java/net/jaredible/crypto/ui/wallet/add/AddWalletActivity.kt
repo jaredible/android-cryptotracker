@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewTreeObserver
@@ -17,6 +16,7 @@ import net.jaredible.crypto.data.model.Crypto
 import net.jaredible.crypto.data.model.MessageType
 import net.jaredible.crypto.data.model.Wallet
 import net.jaredible.crypto.ui.base.BaseActivity
+import net.jaredible.crypto.ui.wallet.remove.RemoveWalletDialog
 import net.jaredible.crypto.ui.wallet.select.SelectCryptoActivity
 import net.jaredible.crypto.util.observeOnce
 
@@ -101,6 +101,13 @@ class AddWalletActivity : BaseActivity(), AddWalletView {
         viewModel.getCrypto(wallet.symbol).observeOnce(this, Observer { setCrypto(it) })
         vName.setText(wallet.name)
         vBalance.setText(wallet.balance.toString())
+        vRemoveWallet.visibility = View.VISIBLE
+        vRemoveWallet.setOnClickListener { removeWallet(wallet.id) }
+    }
+
+    private fun removeWallet(id: Int) {
+        val dialog = RemoveWalletDialog.newInstance()
+        dialog.show(supportFragmentManager, RemoveWalletDialog.TAG)
     }
 
     private fun setCrypto(crypto: Crypto) {
@@ -137,6 +144,14 @@ class AddWalletActivity : BaseActivity(), AddWalletView {
         finish()
     }
 
+    override fun onRemoveWallet() {
+        editingWallet?.let {
+            viewModel.deleteWallet(it)
+            showMessage("Wallet removed", MessageType.SUCCESS)
+            finish()
+        }
+    }
+
     override fun openSelectCryptoScreen() {
         val intent = SelectCryptoActivity.newIntent(this)
         startActivityForResult(intent, 1)
@@ -145,12 +160,9 @@ class AddWalletActivity : BaseActivity(), AddWalletView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        Log.d("TEST", "HERE")
-
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             data?.let {
                 val crypto = it.getParcelableExtra<Crypto>("CRYPTO")
-                Log.d("TEST", crypto.toString())
                 setCrypto(crypto)
             }
         }

@@ -3,12 +3,10 @@ package net.jaredible.crypto.ui.wallet.select
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_select_crypto.*
 import net.jaredible.crypto.R
@@ -45,21 +43,18 @@ class SelectCryptoActivity : BaseActivity(), SelectCryptoView {
         vCryptos.setHasFixedSize(true)
         vCryptos.layoutManager = viewManager
         vCryptos.adapter = viewAdapter
-        vCryptos.addItemDecoration(DividerItemDecoration(this, viewManager.orientation))
 
         viewModel = ViewModelProvider(this).get(SelectCryptoViewModel::class.java)
-        viewModel.getCryptos().observeOnce(this, Observer { onCryptosObserved(it) })
-    }
-
-    private fun onCryptosObserved(cryptos: List<Crypto>) {
-        vProgress.visibility = View.INVISIBLE
-        viewAdapter.setCryptos(cryptos)
-        viewAdapter.notifyDataSetChanged()
+        viewModel.getCryptos().observeOnce(this, Observer {
+            vProgress.visibility = View.INVISIBLE
+            viewAdapter.setCryptos(it)
+            viewAdapter.notifyDataSetChanged()
+            vCryptos.scheduleLayoutAnimation()
+        })
     }
 
     override fun onCryptoSelected(crypto: Crypto) {
         intent.putExtra("CRYPTO", crypto)
-        Log.d("TEST", crypto.toString())
         setResult(RESULT_OK, intent)
         finish()
     }

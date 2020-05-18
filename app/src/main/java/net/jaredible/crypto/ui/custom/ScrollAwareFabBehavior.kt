@@ -14,8 +14,7 @@ class ScrollAwareFabBehavior(context: Context, attrs: AttributeSet) :
         coordinatorLayout: CoordinatorLayout, child: FloatingActionButton,
         directTargetChild: View, target: View, axes: Int, type: Int
     ): Boolean {
-        return axes == ViewCompat.SCROLL_AXIS_VERTICAL
-                || super.onStartNestedScroll(
+        return axes == ViewCompat.SCROLL_AXIS_VERTICAL || super.onStartNestedScroll(
             coordinatorLayout,
             child,
             directTargetChild,

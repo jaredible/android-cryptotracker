@@ -39,6 +39,11 @@ class WalletListAdapter(private val walletListView: WalletListView) : BaseAdapte
         this.wallets.addAll(wallets)
     }
 
+    fun removeWallet(position: Int) {
+        val wallet: Wallet = wallets.removeAt(position)
+        walletListView.onWalletRemoved(wallet)
+    }
+
     fun getCryptos() = cryptos
 
     fun setCryptos(cryptos: List<Crypto>) {

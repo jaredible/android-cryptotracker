@@ -7,16 +7,17 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_wallet_list.*
-import net.jaredible.crypto.App
 import net.jaredible.crypto.R
 import net.jaredible.crypto.data.model.Wallet
 import net.jaredible.crypto.data.repository.PreferenceRepository
 import net.jaredible.crypto.ui.base.BaseActivity
 import net.jaredible.crypto.ui.settings.SettingsActivity
 import net.jaredible.crypto.ui.wallet.add.AddWalletActivity
+import net.jaredible.crypto.ui.wallet.show.ShowWalletDialog
 import net.jaredible.crypto.util.getCurrencyFormat
 import net.jaredible.crypto.util.observeOnce
 
@@ -54,6 +55,26 @@ class WalletListActivity : BaseActivity(), WalletListView {
                 vWallets.adapter = viewAdapter
             })
         })
+
+        ItemTouchHelper(object : ItemTouchHelper.Callback() {
+            override fun getMovementFlags(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ) = makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ) = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.absoluteAdapterPosition
+                val wallet = viewAdapter.getWallets()[position]
+                val intent = AddWalletActivity.getStartIntent(this@WalletListActivity, wallet)
+                startActivity(intent)
+            }
+        }).attachToRecyclerView(vWallets)
 
         vRefresh.setOnRefreshListener { refresh() }
         vAddWallet.setOnClickListener { openAddWalletScreen() }
@@ -99,6 +120,7 @@ class WalletListActivity : BaseActivity(), WalletListView {
                         viewAdapter.setPrices(prices)
                         setWallets(wallets)
                         viewAdapter.notifyDataSetChanged()
+                        vWallets.scheduleLayoutAnimation()
                         updateTotalBalance()
                         setContentRefreshing(false)
                     })
@@ -132,8 +154,12 @@ class WalletListActivity : BaseActivity(), WalletListView {
     }
 
     override fun onWalletClicked(wallet: Wallet) {
-        val intent = AddWalletActivity.getStartIntent(this, wallet)
-        startActivity(intent)
+        val dialog = ShowWalletDialog.newInstance(wallet.id)
+        dialog.show(supportFragmentManager, ShowWalletDialog.TAG)
+    }
+
+    override fun onWalletRemoved(wallet: Wallet) {
+        viewModel.deleteWallet(wallet)
     }
 
     override fun openAddWalletScreen() {
@@ -144,23 +170,6 @@ class WalletListActivity : BaseActivity(), WalletListView {
     override fun openSettingsScreen() {
         val intent = SettingsActivity.getStartIntent(this)
         startActivity(intent)
-    }
-
-    private fun showDeleteDialog(wallet: Wallet) {
-        AwesomeSuccessDialog(this)
-            .setTitle(wallet.symbol)
-            .setMessage("Are you sure to remove this wallet?")
-            .setColoredCircle(R.color.red)
-            .setDialogIconAndColor(R.drawable.ic_delete, R.color.white)
-            .setCancelable(true)
-            .setNegativeButtonText("Never mind")
-            .setNegativeButtonTextColor(android.R.color.black)
-            .setNegativeButtonbackgroundColor(android.R.color.white)
-            .setNegativeButtonClick {  }
-            .setPositiveButtonText("Yes, please")
-            .setPositiveButtonbackgroundColor(R.color.red)
-            .setPositiveButtonClick { }
-            .show()
     }
 
 }

@@ -18,4 +18,6 @@ class WalletListViewModel(application: Application) : BaseViewModel(application)
 
     fun updatePrices() = PriceRepository.updatePrices()
 
+    fun deleteWallet(wallet: Wallet) = WalletRepository.deleteWallet(wallet)
+
 }

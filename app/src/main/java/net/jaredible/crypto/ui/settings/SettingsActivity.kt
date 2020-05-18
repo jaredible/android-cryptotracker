@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import kotlinx.android.synthetic.main.activity_settings.*
+import net.jaredible.crypto.App
 import net.jaredible.crypto.R
+import net.jaredible.crypto.data.repository.PreferenceRepository
 import net.jaredible.crypto.ui.base.BaseActivity
 
 class SettingsActivity : BaseActivity() {
@@ -17,8 +19,6 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
-    private lateinit var settingsFragment: SettingsFragment
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -27,11 +27,11 @@ class SettingsActivity : BaseActivity() {
         vToolbar.setNavigationIcon(R.drawable.ic_close)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        settingsFragment = SettingsFragment()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.vContainer, settingsFragment)
-            .commit()
+        vMusic.isChecked = PreferenceRepository.isMusicEnabled()
+        vMusic.setOnCheckedChangeListener { _, isChecked ->
+            PreferenceRepository.setMusicEnabled(isChecked)
+            App.context.toggleMusic(isChecked)
+        }
 
         if (savedInstanceState == null) {
             vRoot.apply {

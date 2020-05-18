@@ -16,7 +16,7 @@ class MusicService : BaseService(), MediaPlayer.OnCompletionListener {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.background)
+            mediaPlayer = MediaPlayer.create(this, R.raw.music_background)
             mediaPlayer?.isLooping = true
         } else {
             mediaPlayer?.pause()

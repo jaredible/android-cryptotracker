@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:background="@drawable/rounded_1"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:ignore="ContentDescription">
+
+    <TextView
+        android:id="@+id/vName"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="3dp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:paddingTop="5dp"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        tools:text="My Bitcoin Wallet" />
+
+    <ImageView
+        android:id="@+id/vLogo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:padding="15dp"
+        tools:src="@drawable/logo_btc" />
+
+    <TextView
+        android:id="@+id/vBalance"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="3dp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:paddingTop="5dp"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        tools:text="420.69" />
+
+</LinearLayout>
